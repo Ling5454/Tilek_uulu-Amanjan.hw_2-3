@@ -2,16 +2,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        BankAccount account = new BankAccount(15000.0);
+        BankAccount account = new BankAccount(15000);
 
-        try {
-            while (true) {
-                account.withDraw(6000.0);
-                System.out.println("Снято 6000 сом. Остаток на счете: " + account.getAmount() + " сом");
+        while (true) {
+            try {
+                account.withdraw(6000);
+            } catch (LimitException e) {
+                System.out.println(e.getMessage() + " " +
+                        account.getAmount() + " Снимаем " + e.getRemainingAmount() + " сом.");
+                break;
             }
-        } catch (LimitException e) {
-            System.out.println("Произошло исключение: " + e.getMessage());
-            System.out.println("Снято " + e.getRemainingAmount() + " сом. Остаток на счете: 0 сом");
         }
     }
 }
